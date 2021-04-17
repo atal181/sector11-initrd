@@ -1,0 +1,4 @@
+#!/bin/bash
+data=$(readlink -f /dev/disk/by-label/data)
+echo /root$data >> boottime.rc
+sed -i 's/\/root//g' boottime.rc
