@@ -111,19 +111,13 @@ start_update() {
        # Clean up of update files
        if [[ "$?" == "0" ]]; then
            echo ${LINE5} >> ${rootmnt}/boot/boottime.logs
-           mount -o rw,remount ${rootmnt}/overlay
-           rm -rf ${rootmnt}/overlay/${TAR}
-           rm -rf ${rootmnt}/overlay/md5*
-           umount -l ${rootmnt}/overlay
            sed -i -e "s/${UPDATE_STATUS}/update_complete/g" ${rootmnt}/boot/boottime.rc
        else
            echo "Error during updates installation"
-           echo "Droping to shell /bin/sh........."
-           /bin/sh
         fi
         sleep .2
         sed -i 's/UPGRADE=1/UPGRADE=0/g' ${rootmnt}/boot/boottime.rc
-        echo ${LINE5} >> ${rootmnt}/boot/boottime.logs
+        clean_up
     else
         exit 0
     fi
